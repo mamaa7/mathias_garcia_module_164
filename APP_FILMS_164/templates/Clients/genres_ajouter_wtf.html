@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %} Ajouter un GENRES (WTF) {% endblock %}
+{% block body %}
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<p>
+				Ajouter un nouveau Cient
+			</p>
+			<form action="" method="POST" novalidate>
+				<!-- Protection contre les attaques Cross-Site Request Forgery (CSRF) -->
+				{{ form.hidden_tag() }}
+				<div class="form-group">
+					<p>
+						{{ form.prenom_clients_wtf.label }}<br>
+						{{ form.prenom_clients_wtf(size=32) }}<br>
+						{% for error in form.prenom_clients_wtf.errors %}
+							<span style="color: red;">[{{ error }}]</span>
+						{% endfor %}
+					</p>
+					<p>
+						{{ form.nom_genre_wtf.label }}<br>
+						{{ form.nom_genre_wtf(size=32) }}<br>
+						{% for error in form.nom_genre_wtf.errors %}
+							<span style="color: red;">[{{ error }}]</span>
+						{% endfor %}
+					</p>
+					<p>
+						{{ form.tel_clients_wtf.label }}<br>
+						{{ form.tel_clients_wtf(size=32) }}<br>
+						{% for error in form.tel_clients_wtf.errors %}
+							<span style="color: red;">[{{ error }}]</span>
+						{% endfor %}
+					</p>
+					<p>
+						{{ form.mail_clients_wtf.label }}<br>
+						{{ form.mail_clients_wtf(size=32) }}<br>
+						{% for error in form.mail_clients_wtf.errors %}
+							<span style="color: red;">[{{ error }}]</span>
+						{% endfor %}
+					</p><p>
+						{{ form.rue_clients_wtf.label }}<br>
+						{{ form.rue_clients_wtf(size=32) }}<br>
+						{% for error in form.rue_clients_wtf.errors %}
+							<span style="color: red;">[{{ error }}]</span>
+						{% endfor %}
+					</p><p>
+						{{ form.npa_clients_wtf.label }}<br>
+						{{ form.npa_clients_wtf(size=32) }}<br>
+						{% for error in form.npa_clients_wtf.errors %}
+							<span style="color: red;">[{{ error }}]</span>
+						{% endfor %}
+					</p>
+					<p>
+						{{ form.ville_clients_wtf.label }}<br>
+						{{ form.ville_clients_wtf(size=32) }}<br>
+						{% for error in form.ville_clients_wtf.errors %}
+							<span style="color: red;">[{{ error }}]</span>
+						{% endfor %}
+					</p>
+				</div>
+				{{ form.submit(class="btn btn-primary") }}
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
