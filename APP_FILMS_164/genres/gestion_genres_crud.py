@@ -169,7 +169,7 @@ def genres_ajouter_wtf():
 @app.route("/genre_update", methods=['GET', 'POST'])
 def genre_update_wtf():
     # L'utilisateur vient de cliquer sur le bouton "EDIT". Récupère la valeur de "id_genre"
-    id_genre_update = request.values['id_genre_btn_edit_html']
+    id_clients_update = request.values['id_genre_btn_edit_html']
 
     # Objet formulaire pour l'UPDATE
     form_update = FormWTFUpdateGenre()
@@ -179,48 +179,83 @@ def genre_update_wtf():
         if request.method == "POST" and form_update.submit.data:
             # Récupèrer la valeur du champ depuis "genre_update_wtf.html" après avoir cliqué sur "SUBMIT".
             # Puis la convertir en lettres minuscules.
-            name_genre_update = form_update.nom_genre_update_wtf.data
-            name_genre_update = name_genre_update.lower()
-            date_genre_essai = form_update.date_genre_wtf_essai.data
+            nom_clients_update = form_update.nom_clients_update_wtf.data
+            nom_clients_update = nom_clients_update.capitalize()
 
-            valeur_update_dictionnaire = {"value_id_genre": id_genre_update,
-                                          "value_name_genre": name_genre_update,
-                                          "value_date_genre_essai": date_genre_essai
+            prenom_clients_update = form_update.prenom_clients_update_wtf.data
+            prenom_clients_update = prenom_clients_update.capitalize()
+
+            tel_clients_update = form_update.tel_clients_update_wtf.data
+            tel_clients_update = tel_clients_update.capitalize()
+
+            mail_clients_update = form_update.mail_clients_update_wtf.data
+            mail_clients_update = mail_clients_update.capitalize()
+
+            rue_clients_update = form_update.rue_clients_update_wtf.data
+            rue_clients_update = rue_clients_update.capitalize()
+
+            npa_clients_update = form_update.npa_clients_update_wtf.data
+            npa_clients_update = npa_clients_update.capitalize()
+
+            ville_clients_update = form_update.ville_clients_update_wtf.data
+            ville_clients_update = ville_clients_update.capitalize()
+
+            valeur_update_dictionnaire = {"value_id_clients": id_clients_update,
+                                          "value_name_genre": nom_clients_update,
+                                          "value_prenom_clients": prenom_clients_update,
+                                          "value_tel_clients": tel_clients_update,
+                                          "value_mail_clients": mail_clients_update,
+                                          "value_rue_clients": rue_clients_update,
+                                          "value_npa_clients": npa_clients_update,
+                                          "value_ville_clients": ville_clients_update,
                                           }
             print("valeur_update_dictionnaire ", valeur_update_dictionnaire)
 
-            str_sql_update_intitulegenre = """UPDATE t_genre SET intitule_genre = %(value_name_genre)s, 
-            date_ins_genre = %(value_date_genre_essai)s WHERE id_genre = %(value_id_genre)s """
+            str_sql_update_intitulegenre = """UPDATE t_clients
+    								SET nom_clients = %(value_name_genre)s,
+    								prénom_clients = %(value_prenom_clients)s,
+    								téléphone_clients = %(value_tel_clients)s,
+    								mail_clients = %(value_mail_clients)s,
+    								rue_clients = %(value_rue_clients)s,
+    								npa_clients = %(value_npa_clients)s,
+    								ville_clients = %(value_ville_clients)s
+    								WHERE id_clients = %(value_id_clients)s """
             with DBconnection() as mconn_bd:
                 mconn_bd.execute(str_sql_update_intitulegenre, valeur_update_dictionnaire)
 
             flash(f"Donnée mise à jour !!", "success")
             print(f"Donnée mise à jour !!")
 
-            # afficher et constater que la donnée est mise à jour.
+            # Afficher et constater que la donnée est mise à jour.
             # Affiche seulement la valeur modifiée, "ASC" et l'"id_genre_update"
-            return redirect(url_for('genres_afficher', order_by="ASC", id_genre_sel=id_genre_update))
+            return redirect(url_for('genres_afficher', order_by="ASC", id_genre_sel=id_clients_update))
         elif request.method == "GET":
-            # Opération sur la BD pour récupérer "id_genre" et "intitule_genre" de la "t_genre"
-            str_sql_id_genre = "SELECT id_genre, intitule_genre, date_ins_genre FROM t_genre " \
-                               "WHERE id_genre = %(value_id_genre)s"
-            valeur_select_dictionnaire = {"value_id_genre": id_genre_update}
+            # Opération sur la BD pour récupérer "id_genre" et "intitule_genre" de la "t_clients"
+            str_sql_id_genre = "SELECT id_clients, nom_clients, prénom_clients, téléphone_clients, mail_clients, rue_clients, npa_clients, ville_clients FROM t_clients WHERE id_clients = %(value_id_clients)s"
+            valeur_select_dictionnaire = {"value_id_clients": id_clients_update}
             with DBconnection() as mybd_conn:
                 mybd_conn.execute(str_sql_id_genre, valeur_select_dictionnaire)
             # Une seule valeur est suffisante "fetchone()", vu qu'il n'y a qu'un seul champ "nom genre" pour l'UPDATE
             data_nom_genre = mybd_conn.fetchone()
-            print("data_nom_genre ", data_nom_genre, " type ", type(data_nom_genre), " genre ",
-                  data_nom_genre["intitule_genre"])
+            print("data_nom_genre:", data_nom_genre)
+
+            print(" ", data_nom_genre, " type ", type(data_nom_genre), " genre ",
+                  data_nom_genre["nom_clients"])
 
             # Afficher la valeur sélectionnée dans les champs du formulaire "genre_update_wtf.html"
-            form_update.nom_genre_update_wtf.data = data_nom_genre["intitule_genre"]
-            form_update.date_genre_wtf_essai.data = data_nom_genre["date_ins_genre"]
+            form_update.nom_clients_update_wtf.data = data_nom_genre["nom_clients"]
+            form_update.prenom_clients_update_wtf.data = data_nom_genre["prénom_clients"]
+            form_update.tel_clients_update_wtf.data = data_nom_genre["téléphone_clients"]
+            form_update.mail_clients_update_wtf.data = data_nom_genre["mail_clients"]
+            form_update.rue_clients_update_wtf.data = data_nom_genre["rue_clients"]
+            form_update.npa_clients_update_wtf.data = data_nom_genre["npa_clients"]
+            form_update.ville_clients_update_wtf.data = data_nom_genre["ville_clients"]
+
 
     except Exception as Exception_genre_update_wtf:
         raise ExceptionGenreUpdateWtf(f"fichier : {Path(__file__).name}  ;  "
                                       f"{genre_update_wtf.__name__} ; "
                                       f"{Exception_genre_update_wtf}")
-
     return render_template("Clients/genre_update_wtf.html", form_update=form_update)
 
 
