@@ -28,6 +28,73 @@ Remarque :  Dans le champ "nom_film_update_wtf" du formulaire "films/films_updat
 """
 
 
+@app.route("/produit_afficher/<string:order_by>/<int:id_film_sel>", methods=['GET', 'POST'])
+def produit_afficher(order_by, id_film_sel):
+    if request.method == "GET":
+        try:
+            with DBconnection() as mc_afficher:
+                if order_by == "ASC" and id_film_sel == 0:
+                    strsql_genres_afficher = """SELECT id_produits, référence_produits, couleur_produits, type_produits FROM t_produits ORDER BY id_produits ASC """
+                    mc_afficher.execute(strsql_genres_afficher)
+                elif order_by == "ASC":
+                    # C'EST LA QUE VOUS ALLEZ DEVOIR PLACER VOTRE PROPRE LOGIQUE MySql
+                    # la commande MySql classique est "SELECT * FROM t_genre"
+                    # Pour "lever"(raise) une erreur s'il y a des erreurs sur les noms d'attributs dans la table
+                    # donc, je précise les champs à afficher
+                    # Constitution d'un dictionnaire pour associer l'id du genre sélectionné avec un nom de variable
+                    valeur_id_genre_selected_dictionnaire = {"value_id_genre_selected": id_film_sel}
+                    strsql_genres_afficher = """SELECT id_produits, référence_produits, couleur_produits, type_produits FROM t_produits WHERE id_produits = %(value_id_genre_selected)s"""
+
+                    mc_afficher.execute(strsql_genres_afficher, valeur_id_genre_selected_dictionnaire)
+                else:
+                    strsql_genres_afficher = """SELECT id_produits, référence_produits, couleur_produits, type_produits FROM t_produits ORDER BY id_produits DESC"""
+
+                    mc_afficher.execute(strsql_genres_afficher)
+
+                data_genres = mc_afficher.fetchall()
+
+                print("data_genres ", data_genres, " Type : ", type(data_genres))
+
+                # Différencier les messages si la table est vide.
+                if not data_genres and id_film_sel == 0:
+                    flash("""La table "t_clients" est vide. !!""", "warning")
+                elif not data_genres and id_film_sel > 0:
+                    # Si l'utilisateur change l'id_genre dans l'URL et que le genre n'existe pas,
+                    flash(f"Le client demandé n'existe pas !!", "warning")
+                else:
+                    # Dans tous les autres cas, c'est que la table "t_genre" est vide.
+                    # OM 2020.04.09 La ligne ci-dessous permet de donner un sentiment rassurant aux utilisateurs.
+                    flash(f"Données clientss affichés !!", "success")
+
+        except Exception as Exception_produit_afficher:
+            raise ExceptionProduitAfficher(f"fichier : {Path(__file__).name}  ;  "
+                                          f"{produit_afficher.__name__} ; "
+                                          f"{Exception_produit_afficher}")
+
+        return render_template("films/films_afficher.html", data=data_genres)
+
+
+"""
+    Auteur : OM 2021.03.22
+    Définition d'une "route" /genres_ajouter
+
+    Test : ex : http://127.0.0.1:5575/genres_ajouter
+
+    Paramètres : sans
+
+    But : Ajouter un genre pour un film
+
+    Remarque :  Dans le champ "name_genre_html" du formulaire "genres/genres_ajouter.html",
+                le contrôle de la saisie s'effectue ici en Python.
+                On transforme la saisie en minuscules.
+                On ne doit pas accepter des valeurs vides, des valeurs avec des chiffres,
+                des valeurs avec des caractères qui ne sont pas des lettres.
+                Pour comprendre [A-Za-zÀ-ÖØ-öø-ÿ] il faut se reporter à la table ASCII https://www.ascii-code.com/
+                Accepte le trait d'union ou l'apostrophe, et l'espace entre deux mots, mais pas plus d'une occurence.
+"""
+
+
+
 @app.route("/film_add", methods=['GET', 'POST'])
 def film_add_wtf():
     # Objet formulaire pour AJOUTER un film

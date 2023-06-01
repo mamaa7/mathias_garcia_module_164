@@ -82,6 +82,9 @@ class DatabaseException(Base):
 class ExceptionGenresAfficher(Base):
     pass
 
+class ExceptionProduitAfficher(Base):
+    pass
+
 
 class ExceptionGenreDeleteWtf(Base):
     pass
