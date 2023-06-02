@@ -86,7 +86,7 @@ class FormWTFUpdateGenre(FlaskForm):
         Définition d'un "bouton" submit avec un libellé personnalisé.
     """
     nom_clients_update_regexp = "^([A-Z]|[a-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ]*['\- ]?[A-Zaf-zÀ-ÖØ-öø-ÿ]+$"
-    nom_clients_update_wtf = StringField("Clavioter le genre ", validators=[Length(min=2, max=20, message="min 2 max 20"),
+    nom_clients_update_wtf = StringField("Clavioter le Nom ", validators=[Length(min=2, max=20, message="min 2 max 20"),
                                                                           Regexp(nom_clients_update_regexp,
                                                                                  message="Pas de chiffres, de "
                                                                                          "caractères "
@@ -97,7 +97,7 @@ class FormWTFUpdateGenre(FlaskForm):
                                                                           ])
 
     prenom_clients_update_regexp = "^([A-Z]|[a-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ]*['\- ]?[A-Zaf-zÀ-ÖØ-öø-ÿ]+$"
-    prenom_clients_update_wtf = StringField("Clavioter le genre ", validators=[Length(min=2, max=20, message="min 2 max 20"),
+    prenom_clients_update_wtf = StringField("Clavioter le Prénom ", validators=[Length(min=2, max=20, message="min 2 max 20"),
                                                                           Regexp(prenom_clients_update_regexp,
                                                                                  message="Pas de chiffres, de "
                                                                                          "caractères "
@@ -108,7 +108,7 @@ class FormWTFUpdateGenre(FlaskForm):
                                                                           ])
 
     tel_clients_update_regexp = "^([A-Z]|[a-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ]*['\- ]?[A-Zaf-zÀ-ÖØ-öø-ÿ]+$"
-    tel_clients_update_wtf = StringField("Clavioter le genre ", validators=[Length(min=2, max=20, message="min 2 max 20"),
+    tel_clients_update_wtf = StringField("Clavioter le Numéro de téléphone ", validators=[Length(min=2, max=20, message="min 2 max 20"),
                                                                           Regexp(tel_clients_update_regexp,
                                                                                  message="Pas de chiffres, de "
                                                                                          "caractères "
@@ -119,7 +119,7 @@ class FormWTFUpdateGenre(FlaskForm):
                                                                           ])
 
     mail_clients_update_regexp = "^([A-Z]|[a-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ]*['\- ]?[A-Zaf-zÀ-ÖØ-öø-ÿ]+$"
-    mail_clients_update_wtf = StringField("Clavioter le genre ", validators=[Length(min=2, max=20, message="min 2 max 20"),
+    mail_clients_update_wtf = StringField("Clavioter L'adresse e-mail ", validators=[Length(min=2, max=20, message="min 2 max 20"),
                                                                           Regexp(mail_clients_update_regexp,
                                                                                  message="Pas de chiffres, de "
                                                                                          "caractères "
@@ -130,7 +130,7 @@ class FormWTFUpdateGenre(FlaskForm):
                                                                           ])
 
     rue_clients_update_regexp = "^([A-Z]|[a-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ]*['\- ]?[A-Zaf-zÀ-ÖØ-öø-ÿ]+$"
-    rue_clients_update_wtf = StringField("Clavioter le genre ", validators=[Length(min=2, max=20, message="min 2 max 20"),
+    rue_clients_update_wtf = StringField("Clavioter la Rue ", validators=[Length(min=2, max=20, message="min 2 max 20"),
                                                                           Regexp(rue_clients_update_regexp,
                                                                                  message="Pas de chiffres, de "
                                                                                          "caractères "
@@ -141,7 +141,7 @@ class FormWTFUpdateGenre(FlaskForm):
                                                                           ])
 
     npa_clients_update_regexp = "^([A-Z]|[a-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ]*['\- ]?[A-Zaf-zÀ-ÖØ-öø-ÿ]+$"
-    npa_clients_update_wtf = StringField("Clavioter le genre ", validators=[Length(min=2, max=20, message="min 2 max 20"),
+    npa_clients_update_wtf = StringField("Clavioter le Npa ", validators=[Length(min=2, max=20, message="min 2 max 20"),
                                                                           Regexp(npa_clients_update_regexp,
                                                                                  message="Pas de chiffres, de "
                                                                                          "caractères "
@@ -152,7 +152,7 @@ class FormWTFUpdateGenre(FlaskForm):
                                                                           ])
 
     ville_clients_update_regexp = "^([A-Z]|[a-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ]*['\- ]?[A-Zaf-zÀ-ÖØ-öø-ÿ]+$"
-    ville_clients_update_wtf = StringField("Clavioter le genre ", validators=[Length(min=2, max=20, message="min 2 max 20"),
+    ville_clients_update_wtf = StringField("Clavioter la Ville ", validators=[Length(min=2, max=20, message="min 2 max 20"),
                                                                           Regexp(ville_clients_update_regexp,
                                                                                  message="Pas de chiffres, de "
                                                                                          "caractères "
@@ -176,13 +176,13 @@ class FormWTFDeleteGenre(FlaskForm):
         submit_btn_conf_del : Bouton de confirmation pour effacer un "genre".
         submit_btn_annuler : Bouton qui permet d'afficher la table "t_genre".
     """
-    nom_genre_delete_wtf = StringField("Effacer ce genre")
-    prenom_clients_delete_wtf = StringField("")
-    tel_clients_delete_wtf = StringField("")
-    mail_clients_wtf = StringField("")
-    rue_clients_delete_wtf = StringField("")
-    npa_clients_delete_wtf = StringField("")
-    ville_clients_delete_wtf = StringField("")
+    nom_genre_delete_wtf = StringField("Nom")
+    prenom_clients_delete_wtf = StringField("Prénom")
+    tel_clients_delete_wtf = StringField("Numéro de téléphone")
+    mail_clients_wtf = StringField("Adresse e-mail")
+    rue_clients_delete_wtf = StringField("Rue")
+    npa_clients_delete_wtf = StringField("Npa")
+    ville_clients_delete_wtf = StringField("Ville")
 
     submit_btn_del = SubmitField("Effacer clients")
     submit_btn_conf_del = SubmitField("Etes-vous sur d'effacer ?")
