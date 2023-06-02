@@ -177,6 +177,13 @@ class FormWTFDeleteGenre(FlaskForm):
         submit_btn_annuler : Bouton qui permet d'afficher la table "t_genre".
     """
     nom_genre_delete_wtf = StringField("Effacer ce genre")
-    submit_btn_del = SubmitField("Effacer genre")
+    prenom_clients_delete_wtf = StringField("")
+    tel_clients_delete_wtf = StringField("")
+    mail_clients_wtf = StringField("")
+    rue_clients_delete_wtf = StringField("")
+    npa_clients_delete_wtf = StringField("")
+    ville_clients_delete_wtf = StringField("")
+
+    submit_btn_del = SubmitField("Effacer clients")
     submit_btn_conf_del = SubmitField("Etes-vous sur d'effacer ?")
     submit_btn_annuler = SubmitField("Annuler")

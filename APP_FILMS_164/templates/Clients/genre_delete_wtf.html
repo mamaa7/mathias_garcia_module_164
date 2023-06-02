@@ -28,7 +28,7 @@
 							<tbody>
 								<tr>
 									<td>
-										{{ row.nom_film }}
+										{{ row.nom_clients }}
 									</td>
 								</tr>
 							</tbody>
@@ -42,6 +42,48 @@
 						{{ form_delete.nom_genre_delete_wtf.label }}<br>
 						{{ form_delete.nom_genre_delete_wtf(size=32, readonly=true) }}<br>
 						{% for error in form_delete.nom_genre_delete_wtf.errors %}
+							<span style="color: red;">[{{ error }}]</span>
+						{% endfor %}
+					</p>
+					<p>
+						{{ form_delete.prenom_clients_delete_wtf.label }}<br>
+						{{ form_delete.prenom_clients_delete_wtf(size=32, readonly=true) }}<br>
+						{% for error in form_delete.prenom_clients_delete_wtf.errors %}
+							<span style="color: red;">[{{ error }}]</span>
+						{% endfor %}
+					</p>
+					<p>
+						{{ form_delete.tel_clients_delete_wtf.label }}<br>
+						{{ form_delete.tel_clients_delete_wtf(size=32, readonly=true) }}<br>
+						{% for error in form_delete.tel_clients_delete_wtf.errors %}
+							<span style="color: red;">[{{ error }}]</span>
+						{% endfor %}
+					</p>
+					<p>
+						{{ form_delete.mail_clients_wtf.label }}<br>
+						{{ form_delete.mail_clients_wtf(size=32, readonly=true) }}<br>
+						{% for error in form_delete.mail_clients_wtf.errors %}
+							<span style="color: red;">[{{ error }}]</span>
+						{% endfor %}
+					</p>
+					<p>
+						{{ form_delete.rue_clients_delete_wtf.label }}<br>
+						{{ form_delete.rue_clients_delete_wtf(size=32, readonly=true) }}<br>
+						{% for error in form_delete.rue_clients_delete_wtf.errors %}
+							<span style="color: red;">[{{ error }}]</span>
+						{% endfor %}
+					</p>
+					<p>
+						{{ form_delete.npa_clients_delete_wtf.label }}<br>
+						{{ form_delete.npa_clients_delete_wtf(size=32, readonly=true) }}<br>
+						{% for error in form_delete.npa_clients_delete_wtf.errors %}
+							<span style="color: red;">[{{ error }}]</span>
+						{% endfor %}
+					</p>
+					<p>
+						{{ form_delete.ville_clients_delete_wtf.label }}<br>
+						{{ form_delete.ville_clients_delete_wtf(size=32, readonly=true) }}<br>
+						{% for error in form_delete.ville_clients_delete_wtf.errors %}
 							<span style="color: red;">[{{ error }}]</span>
 						{% endfor %}
 					</p>
