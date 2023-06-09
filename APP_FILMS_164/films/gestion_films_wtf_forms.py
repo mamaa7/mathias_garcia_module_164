@@ -16,16 +16,32 @@ class FormWTFAddFilm(FlaskForm):
         Dans le formulaire "genres_ajouter_wtf.html" on impose que le champ soit rempli.
         Définition d'un "bouton" submit avec un libellé personnalisé.
     """
-    nom_film_regexp = ""
-    nom_film_add_wtf = StringField("Nom du film ", validators=[Length(min=2, max=2000, message="min 2 max 20"),
-                                                               Regexp(nom_film_regexp,
+    reference_produits_regexp = "^\d{1,10}$"
+    reference_produits_add_wtf = StringField("Référence du produit ", validators=[Length(min=1, max=10, message="min 1 max 10"),
+                                                               Regexp(reference_produits_regexp,
+                                                                      message="Pas de lettres, de caractères "
+                                                                              "spéciaux, "
+                                                                              "d'espace à double, de double "
+                                                                              "apostrophe, de double trait union")
+                                                               ])
+    couleur_produits_regexp = "^([A-Z]|[a-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ]*['\- ]?[A-Zaf-zÀ-ÖØ-öø-ÿ]+$"
+    couleur_produits_add_wtf = StringField("Couleur du produit ", validators=[Length(min=2, max=2000, message="min 2 max 20"),
+                                                               Regexp(couleur_produits_regexp,
+                                                                      message="Pas de chiffres, de caractères "
+                                                                              "spéciaux, "
+                                                                              "d'espace à double, de double "
+                                                                              "apostrophe, de double trait union")
+                                                               ])
+    type_produits_regexp = "^([A-Z]|[a-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ]*['\- ]?[A-Zaf-zÀ-ÖØ-öø-ÿ]+$"
+    type_produits_add_wtf = StringField("Type de produit ", validators=[Length(min=2, max=2000, message="min 2 max 20"),
+                                                               Regexp(type_produits_regexp,
                                                                       message="Pas de chiffres, de caractères "
                                                                               "spéciaux, "
                                                                               "d'espace à double, de double "
                                                                               "apostrophe, de double trait union")
                                                                ])
 
-    submit = SubmitField("Enregistrer film")
+    submit = SubmitField("Enregistrer produit")
 
 
 class FormWTFUpdateFilm(FlaskForm):
@@ -33,22 +49,44 @@ class FormWTFUpdateFilm(FlaskForm):
         Dans le formulaire "film_update_wtf.html" on impose que le champ soit rempli.
         Définition d'un "bouton" submit avec un libellé personnalisé.
     """
+    reference_produits_update_regexp = "^([A-Z]|[a-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ]*['\- ]?[A-Zaf-zÀ-ÖØ-öø-ÿ]+$"
+    reference_produits_update_wtf = StringField("Clavioter la référence du produit ", validators=[Length(min=2, max=20, message="min 2 max 20"),
+                                                                          Regexp(reference_produits_update_regexp,
+                                                                                 message="Pas de chiffres, de "
+                                                                                         "caractères "
+                                                                                         "spéciaux, "
+                                                                                         "d'espace à double, de double "
+                                                                                         "apostrophe, de double trait "
+                                                                                         "union")
+                                                                          ])
 
-    nom_film_update_wtf = StringField("Clavioter le titre", widget=TextArea())
-    duree_film_update_wtf = IntegerField("Durée du film (minutes)", validators=[NumberRange(min=1, max=5000,
-                                                                                            message=u"Min %(min)d et "
-                                                                                                    u"max %(max)d "
-                                                                                                    u"Selon Wikipédia "
-                                                                                                    u"L'Incendie du "
-                                                                                                    u"monastère du "
-                                                                                                    u"Lotus rouge "
-                                                                                                    u"durée 1620 "
-                                                                                                    u"min")])
+    couleur_produits_update_regexp = "^([A-Z]|[a-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ]*['\- ]?[A-Zaf-zÀ-ÖØ-öø-ÿ]+$"
+    couleur_produits_update_wtf = StringField("Clavioter la couleur du produit ",
+                                            validators=[Length(min=2, max=20, message="min 2 max 20"),
+                                                        Regexp(couleur_produits_update_regexp,
+                                                               message="Pas de chiffres, de "
+                                                                       "caractères "
+                                                                       "spéciaux, "
+                                                                       "d'espace à double, de double "
+                                                                       "apostrophe, de double trait "
+                                                                       "union")
+                                                        ])
 
-    description_film_update_wtf = StringField("Description du film ", widget=TextArea())
-    cover_link_film_update_wtf = StringField("Lien de l'affiche du film ", widget=TextArea())
-    datesortie_film_update_wtf = DateField("Date de sortie du film", validators=[InputRequired("Date obligatoire"),
-                                                                                 DataRequired("Date non valide")])
+    type_produits_update_regexp = "^([A-Z]|[a-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ]*['\- ]?[A-Zaf-zÀ-ÖØ-öø-ÿ]+$"
+    type_produits_update_wtf = StringField("Clavioter le type de produit ",
+                                         validators=[Length(min=2, max=20, message="min 2 max 20"),
+                                                     Regexp(type_produits_update_regexp,
+                                                            message="Pas de chiffres, de "
+                                                                    "caractères "
+                                                                    "spéciaux, "
+                                                                    "d'espace à double, de double "
+                                                                    "apostrophe, de double trait "
+                                                                    "union")
+                                                     ])
+
+    reference_produits_update_wtf = StringField("Référence du produit ", widget=TextArea())
+    couleur_produits_update_wtf = StringField("Couleur du produit", widget=TextArea())
+    type_produits_update_wtf = StringField("Type de produit", widget=TextArea())
     submit = SubmitField("Update film")
 
 

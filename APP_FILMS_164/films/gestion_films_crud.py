@@ -12,6 +12,7 @@ from flask import url_for
 from APP_FILMS_164.database.database_tools import DBconnection
 from APP_FILMS_164.erreurs.exceptions import *
 from APP_FILMS_164.films.gestion_films_wtf_forms import FormWTFUpdateFilm, FormWTFAddFilm, FormWTFDeleteFilm
+import datetime
 
 """Ajouter un film grâce au formulaire "film_add_wtf.html"
 Auteur : OM 2022.04.11
@@ -34,7 +35,7 @@ def produit_afficher(order_by, id_film_sel):
         try:
             with DBconnection() as mc_afficher:
                 if order_by == "ASC" and id_film_sel == 0:
-                    strsql_genres_afficher = """SELECT id_produits, référence_produits, couleur_produits, type_produits FROM t_produits ORDER BY id_produits ASC """
+                    strsql_genres_afficher = """SELECT id_produits, reference_produits, couleur_produits, type_produits FROM t_produits ORDER BY id_produits ASC """
                     mc_afficher.execute(strsql_genres_afficher)
                 elif order_by == "ASC":
                     # C'EST LA QUE VOUS ALLEZ DEVOIR PLACER VOTRE PROPRE LOGIQUE MySql
@@ -43,11 +44,11 @@ def produit_afficher(order_by, id_film_sel):
                     # donc, je précise les champs à afficher
                     # Constitution d'un dictionnaire pour associer l'id du genre sélectionné avec un nom de variable
                     valeur_id_genre_selected_dictionnaire = {"value_id_genre_selected": id_film_sel}
-                    strsql_genres_afficher = """SELECT id_produits, référence_produits, couleur_produits, type_produits FROM t_produits WHERE id_produits = %(value_id_genre_selected)s"""
+                    strsql_genres_afficher = """SELECT id_produits, reference_produits, couleur_produits, type_produits FROM t_produits WHERE id_produits = %(value_id_genre_selected)s"""
 
                     mc_afficher.execute(strsql_genres_afficher, valeur_id_genre_selected_dictionnaire)
                 else:
-                    strsql_genres_afficher = """SELECT id_produits, référence_produits, couleur_produits, type_produits FROM t_produits ORDER BY id_produits DESC"""
+                    strsql_genres_afficher = """SELECT id_produits, reference_produits, couleur_produits, type_produits FROM t_produits ORDER BY id_produits DESC"""
 
                     mc_afficher.execute(strsql_genres_afficher)
 
@@ -97,24 +98,29 @@ def produit_afficher(order_by, id_film_sel):
 
 @app.route("/film_add", methods=['GET', 'POST'])
 def film_add_wtf():
-    # Objet formulaire pour AJOUTER un film
+    # Objet formulaire pour AJOUTER un produit
     form_add_film = FormWTFAddFilm()
     if request.method == "POST":
         try:
             if form_add_film.validate_on_submit():
-                nom_film_add = form_add_film.nom_film_add_wtf.data
+                reference_produits_add = form_add_film.reference_produits_add_wtf.data.lower()
+                couleur_produits_add = form_add_film.couleur_produits_add_wtf.data.lower()
+                type_produits_add = form_add_film.type_produits_add_wtf.data.lower()
 
-                valeurs_insertion_dictionnaire = {"value_nom_film": nom_film_add}
+                valeurs_insertion_dictionnaire = {"value_reference_produits" : reference_produits_add,
+                                                  "value_couleur_produits" : couleur_produits_add,
+                                                  "value_type_produits" : type_produits_add}
+
                 print("valeurs_insertion_dictionnaire ", valeurs_insertion_dictionnaire)
 
-                strsql_insert_film = """INSERT INTO t_produits (id_film,nom_film) VALUES (NULL,%(value_nom_film)s) """
+                strsql_insert_film = """INSERT INTO t_produits (id_produits, reference_produits, couleur_produits, type_produits) VALUES (NULL,%(value_reference_produits)s, %(value_couleur_produits)s, %(value_type_produits)s) """
                 with DBconnection() as mconn_bd:
                     mconn_bd.execute(strsql_insert_film, valeurs_insertion_dictionnaire)
 
                 flash(f"Données insérées !!", "success")
                 print(f"Données insérées !!")
 
-                # Pour afficher et constater l'insertion du nouveau film (id_film_sel=0 => afficher tous les films)
+                # Pour afficher et constater l'insertion du nouveau produit (id_film_sel=0 => afficher tous les films)
                 return redirect(url_for('films_genres_afficher', id_film_sel=0))
 
         except Exception as Exception_genres_ajouter_wtf:
@@ -153,55 +159,55 @@ def film_update_wtf():
         # La validation pose quelques problèmes
         if request.method == "POST" and form_update_film.submit.data:
             # Récupèrer la valeur du champ depuis "genre_update_wtf.html" après avoir cliqué sur "SUBMIT".
-            nom_film_update = form_update_film.nom_film_update_wtf.data
-            duree_film_update = form_update_film.duree_film_update_wtf.data
-            description_film_update = form_update_film.description_film_update_wtf.data
-            cover_link_film_update = form_update_film.cover_link_film_update_wtf.data
-            datesortie_film_update = form_update_film.datesortie_film_update_wtf.data
+            reference_produits_update = form_update_film.reference_produits_update_wtf.data
+            couleur_produits_update = form_update_film.couleur_produits_update_wtf.data
+            type_produits_update = form_update_film.type_produits_update_wtf.data
 
-            valeur_update_dictionnaire = {"value_id_produits": id_film_update,
-                                          "value_nom_film": nom_film_update,
-                                          "value_duree_film": duree_film_update,
-                                          "value_description_film": description_film_update,
-                                          "value_cover_link_film": cover_link_film_update,
-                                          "value_datesortie_film": datesortie_film_update
-                                          }
+
+            valeur_update_dictionnaire = {"value_reference_produits": reference_produits_update,
+                                          "value_couleur_produits": couleur_produits_update,
+                                          "value_type_produits" : type_produits_update
+                                            }
             print("valeur_update_dictionnaire ", valeur_update_dictionnaire)
 
-            str_sql_update_nom_film = """UPDATE t_produits SET nom_film = %(value_nom_film)s,
-                                                            duree_film = %(value_duree_film)s,
-                                                            description_film = %(value_description_film)s,
-                                                            cover_link_film = %(value_cover_link_film)s,
-                                                            date_sortie_film = %(value_datesortie_film)s
-                                                            WHERE id_produits = %(value_id_produits)s"""
+            str_sql_update_nom_film = """UPDATE t_produits
+                				            SET reference_produits = %(value_reference_produits)s,
+                                            couleur_produits = %(value_couleur_produits)s,
+                                            type_produits = %(value_type_produits)s
+                                            WHERE id_produits = %(value_id_produits)s"""
+
+
+
             with DBconnection() as mconn_bd:
                 mconn_bd.execute(str_sql_update_nom_film, valeur_update_dictionnaire)
 
             flash(f"Donnée mise à jour !!", "success")
             print(f"Donnée mise à jour !!")
 
-            # afficher et constater que la donnée est mise à jour.
             # Afficher seulement le film modifié, "ASC" et l'"id_film_update"
             return redirect(url_for('films_genres_afficher', id_film_sel=id_film_update))
         elif request.method == "GET":
-            # Opération sur la BD pour récupérer "id_film" et "intitule_genre" de la "t_genre"
-            str_sql_id_film = "SELECT * FROM t_produits WHERE id_produits = %(value_id_produits)s"
-            valeur_select_dictionnaire = {"value_id_film": id_film_update}
+
+
+            # Opération sur la BD pour récupérer "id_produits" et "intitule_genre" de la "t_produits"
+
+            str_sql_id_film = "SELECT id_produits, reference_produits, couleur_produits, type_produits FROM t_produits WHERE id_produits = %(value_id_produits)s"
+            valeur_select_dictionnaire = {"value_id_produits": id_film_update}
             with DBconnection() as mybd_conn:
                 mybd_conn.execute(str_sql_id_film, valeur_select_dictionnaire)
+
+
             # Une seule valeur est suffisante "fetchone()", vu qu'il n'y a qu'un seul champ "nom genre" pour l'UPDATE
             data_film = mybd_conn.fetchone()
-            print("data_film ", data_film, " type ", type(data_film), " genre ",
-                  data_film["nom_film"])
+            print("data_film ", data_film, " type ", type(data_film), " t_produits ",
+                  data_film["type_produits"])
+
 
             # Afficher la valeur sélectionnée dans le champ du formulaire "film_update_wtf.html"
-            form_update_film.nom_film_update_wtf.data = data_film["nom_film"]
-            form_update_film.duree_film_update_wtf.data = data_film["duree_film"]
-            # Debug simple pour contrôler la valeur dans la console "run" de PyCharm
-            print(f" duree film  ", data_film["duree_film"], "  type ", type(data_film["duree_film"]))
-            form_update_film.description_film_update_wtf.data = data_film["description_film"]
-            form_update_film.cover_link_film_update_wtf.data = data_film["cover_link_film"]
-            form_update_film.datesortie_film_update_wtf.data = data_film["date_sortie_film"]
+            if data_film is not None:
+                form_update_film.reference_produits_update_wtf.data = data_film["reference_produits"]
+                form_update_film.couleur_produits_update_wtf.data = data_film["couleur_produits"]
+                form_update_film.type_produits_update_wtf.data = data_film["type_produits"]
 
     except Exception as Exception_film_update_wtf:
         raise ExceptionFilmUpdateWtf(f"fichier : {Path(__file__).name}  ;  "
@@ -255,8 +261,8 @@ def film_delete_wtf():
             valeur_delete_dictionnaire = {"value_id_film": id_film_delete}
             print("valeur_delete_dictionnaire ", valeur_delete_dictionnaire)
 
-            str_sql_delete_fk_film_genre = """DELETE FROM t_genre_film WHERE fk_film = %(value_id_produits)s"""
-            str_sql_delete_film = """DELETE FROM t_produits WHERE id_produits = %(value_id_produits)s"""
+            str_sql_delete_fk_film_genre = """DELETE FROM t_categorie_avoir_produit WHERE fk_produits_1 = %(value_id_film)s"""
+            str_sql_delete_film = """DELETE FROM t_produits WHERE id_produits = %(value_id_film)s"""
             # Manière brutale d'effacer d'abord la "fk_film", même si elle n'existe pas dans la "t_genre_film"
             # Ensuite on peut effacer le film vu qu'il n'est plus "lié" (INNODB) dans la "t_genre_film"
             with DBconnection() as mconn_bd:
@@ -267,13 +273,19 @@ def film_delete_wtf():
             print(f"Film définitivement effacé !!")
 
             # afficher les données
-            return redirect(url_for('films_genres_afficher', id_produits_sel=0))
+            return redirect(url_for('films_genres_afficher', id_film_sel=0))
         if request.method == "GET":
-            valeur_select_dictionnaire = {"value_id_produits": id_film_delete}
+            valeur_select_dictionnaire = {"value_id_film": id_film_delete}
             print(id_film_delete, type(id_film_delete))
 
             # Requête qui affiche le film qui doit être efffacé.
-            str_sql_genres_films_delete = """SELECT * FROM t_produits WHERE id_produits = %(value_id_produits)s"""
+            str_sql_genres_films_delete = """SELECT id_categorie, nom_categorie FROM t_categorie_avoir_produit 
+                                              INNER JOIN t_categorie ON t_categorie_avoir_produit.fk_categorie = t_categorie.id_categorie 
+                                              INNER JOIN t_produits ON t_categorie_avoir_produit.fk_produits_1 = t_produits.id_produits
+                                              WHERE fk_produits_1 = %(value_id_film)s"""
+
+
+
 
             with DBconnection() as mydb_conn:
                 mydb_conn.execute(str_sql_genres_films_delete, valeur_select_dictionnaire)

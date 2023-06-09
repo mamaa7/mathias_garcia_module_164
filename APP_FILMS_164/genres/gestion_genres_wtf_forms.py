@@ -110,49 +110,32 @@ class FormWTFUpdateGenre(FlaskForm):
     tel_clients_update_regexp = "^([A-Z]|[a-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ]*['\- ]?[A-Zaf-zÀ-ÖØ-öø-ÿ]+$"
     tel_clients_update_wtf = StringField("Clavioter le Numéro de téléphone ", validators=[Length(min=2, max=20, message="min 2 max 20"),
                                                                           Regexp(tel_clients_update_regexp,
-                                                                                 message="Pas de chiffres, de "
-                                                                                         "caractères "
-                                                                                         "spéciaux, "
-                                                                                         "d'espace à double, de double "
-                                                                                         "apostrophe, de double trait "
-                                                                                         "union")
+                                                                                 message=" Uniquement des chiffres ")
                                                                           ])
 
     mail_clients_update_regexp = "^([A-Z]|[a-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ]*['\- ]?[A-Zaf-zÀ-ÖØ-öø-ÿ]+$"
-    mail_clients_update_wtf = StringField("Clavioter L'adresse e-mail ", validators=[Length(min=2, max=20, message="min 2 max 20"),
+    mail_clients_update_wtf = StringField("Clavioter L'adresse e-mail ", validators=[Length(min=2, max=50, message="min 2 max 50"),
                                                                           Regexp(mail_clients_update_regexp,
-                                                                                 message="Pas de chiffres, de "
-                                                                                         "caractères "
-                                                                                         "spéciaux, "
-                                                                                         "d'espace à double, de double "
-                                                                                         "apostrophe, de double trait "
-                                                                                         "union")
+                                                                                 message=" Une adresse e-mail valide avec un @ ")
                                                                           ])
 
     rue_clients_update_regexp = "^([A-Z]|[a-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ]*['\- ]?[A-Zaf-zÀ-ÖØ-öø-ÿ]+$"
-    rue_clients_update_wtf = StringField("Clavioter la Rue ", validators=[Length(min=2, max=20, message="min 2 max 20"),
+    rue_clients_update_wtf = StringField("Clavioter la Rue ", validators=[Length(min=2, max=50, message="min 2 max 50"),
                                                                           Regexp(rue_clients_update_regexp,
-                                                                                 message="Pas de chiffres, de "
-                                                                                         "caractères "
-                                                                                         "spéciaux, "
+                                                                                 message="Pas de caractères spéciaux, "
                                                                                          "d'espace à double, de double "
                                                                                          "apostrophe, de double trait "
                                                                                          "union")
                                                                           ])
 
     npa_clients_update_regexp = "^([A-Z]|[a-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ]*['\- ]?[A-Zaf-zÀ-ÖØ-öø-ÿ]+$"
-    npa_clients_update_wtf = StringField("Clavioter le Npa ", validators=[Length(min=2, max=20, message="min 2 max 20"),
+    npa_clients_update_wtf = StringField("Clavioter le Npa ", validators=[Length(min=2, max=4, message="min 2 max 4"),
                                                                           Regexp(npa_clients_update_regexp,
-                                                                                 message="Pas de chiffres, de "
-                                                                                         "caractères "
-                                                                                         "spéciaux, "
-                                                                                         "d'espace à double, de double "
-                                                                                         "apostrophe, de double trait "
-                                                                                         "union")
+                                                                                 message="Uniquement des chiffres")
                                                                           ])
 
     ville_clients_update_regexp = "^([A-Z]|[a-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ]*['\- ]?[A-Zaf-zÀ-ÖØ-öø-ÿ]+$"
-    ville_clients_update_wtf = StringField("Clavioter la Ville ", validators=[Length(min=2, max=20, message="min 2 max 20"),
+    ville_clients_update_wtf = StringField("Clavioter la Ville ", validators=[Length(min=2, max=50, message="min 2 max 50"),
                                                                           Regexp(ville_clients_update_regexp,
                                                                                  message="Pas de chiffres, de "
                                                                                          "caractères "

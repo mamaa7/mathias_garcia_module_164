@@ -228,8 +228,10 @@ def genre_update_wtf():
 
             # Afficher et constater que la donnée est mise à jour.
             # Affiche seulement la valeur modifiée, "ASC" et l'"id_genre_update"
+
             return redirect(url_for('genres_afficher', order_by="ASC", id_genre_sel=id_clients_update))
         elif request.method == "GET":
+
             # Opération sur la BD pour récupérer "id_genre" et "intitule_genre" de la "t_clients"
             str_sql_id_genre = "SELECT id_clients, nom_clients, prénom_clients, téléphone_clients, mail_clients, rue_clients, npa_clients, ville_clients FROM t_clients WHERE id_clients = %(value_id_clients)s"
             valeur_select_dictionnaire = {"value_id_clients": id_clients_update}
