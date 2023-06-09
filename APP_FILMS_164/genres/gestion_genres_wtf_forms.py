@@ -77,7 +77,7 @@ class FormWTFAjouterGenres(FlaskForm):
                                                                                 "d'espace à double, de double "
                                                                                 "apostrophe, de double trait union")
                                                                  ])
-    submit = SubmitField("Enregistrer genre")
+    submit = SubmitField("Enregistrer clients")
 
 
 class FormWTFUpdateGenre(FlaskForm):
@@ -147,7 +147,7 @@ class FormWTFUpdateGenre(FlaskForm):
 
     date_genre_wtf_essai = DateField("Essai date", validators=[InputRequired("Date obligatoire"),
                                                                DataRequired("Date non valide")])
-    submit = SubmitField("Update genre")
+    submit = SubmitField("Update clients")
 
 
 class FormWTFDeleteGenre(FlaskForm):
