@@ -74,11 +74,11 @@ CREATE TABLE IF NOT EXISTS `t_clients` (
   `npa_clients` varchar(50) NOT NULL DEFAULT '0',
   `ville_clients` varchar(50) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_clients`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 -- Listage des données de la table garcia_mathias_iinfo1b_magasin_164_2023.t_clients : ~6 rows (environ)
 INSERT INTO `t_clients` (`id_clients`, `prénom_clients`, `nom_clients`, `téléphone_clients`, `mail_clients`, `rue_clients`, `npa_clients`, `ville_clients`) VALUES
-	(1, 'Mathias', 'Garcia', '0792050074', 'Mathias.damota@eduvaud.ch', 'Chemin de primerose 35', '1007', 'Lausanne'),
+	(1, 'Mathias', 'Garcia', '0792050074', 'Mathias.damota@eduvaud.ch', 'Chemin de primerose 35', '1005', 'Lausanne'),
 	(2, 'Olivier', 'Maccaud', '0786754563', 'olivier.maccaud@eduvaud.ch', 'chemin du flon 12', '1005', 'Lausanne'),
 	(3, 'Sam ', 'Gerard', '0765431289', 'sam.gerard@eduvaud.ch', 'avenue fédérale 12', '1020', 'Renens'),
 	(8, 'pelliccione', 'andrea', '0788237818', 'sdads@gmail.com', 'chemin de rue 5', '1030', 'bussigny'),
@@ -122,15 +122,14 @@ CREATE TABLE IF NOT EXISTS `t_produits` (
   `couleur_produits` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `type_produits` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   PRIMARY KEY (`id_produits`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=latin1;
 
--- Listage des données de la table garcia_mathias_iinfo1b_magasin_164_2023.t_produits : ~5 rows (environ)
+-- Listage des données de la table garcia_mathias_iinfo1b_magasin_164_2023.t_produits : ~3 rows (environ)
 INSERT INTO `t_produits` (`id_produits`, `reference_produits`, `couleur_produits`, `type_produits`) VALUES
-	(1, '12345', 'Blanc', 'Nike blue'),
+	(1, '12345', 'Blanc', 'Nike bluee'),
 	(3, '234242', 'Bleu', 'Pantalon'),
-	(5, '97643', 'Blanc', 'SweetShirt'),
 	(8, '56913', 'Orange', 'Tshirt'),
-	(33, 'asdadasda', 'noir', 'balenciagaa');
+	(36, '2', 'tets', 'test');
 
 -- Listage de la structure de table garcia_mathias_iinfo1b_magasin_164_2023. t_produits_avoir_commandes
 CREATE TABLE IF NOT EXISTS `t_produits_avoir_commandes` (
